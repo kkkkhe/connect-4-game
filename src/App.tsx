@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 function App() {
-  let i = 0
-  const [board, setBoard] = useState<any>(Array.from({length: 6},() => Array.from({length: 7}, () => i++)))
+  const [board, setBoard] = useState<any>(Array.from({length: 6},() => Array.from({length: 7}, () => 0)))
   const [step, setStep] = useState<boolean>(false)
   const color = ['red', 'yellow']
   function handleOnClick(indCol:number, indRow:number){
@@ -16,6 +15,8 @@ function App() {
       }
     }
   }
+  horizontalCheckForWinner(board)
+  verticalCheckForWin(board)
   return (
     <div className="flex flex-col-reverse gap-2 h-screen w-full items-center justify-center bg-gray-100">
       <div className='bg-neutral-800 rounded-lg'>
@@ -40,6 +41,49 @@ function App() {
       
     </div>
   )
+}
+
+function horizontalCheckForWinner(board:any){
+
+  for(let i = 0; i < board.length; i++){
+    let yellow = 0
+    let red = 0
+    for(let k = 0; k < 7; k++){
+      if(board[i][k] === 'red'){
+        red++
+        if(red == 4) console.log('Red win')
+        continue
+      }
+      red = 0
+      if(board[i][k] === 'yellow'){
+        yellow++
+        if(yellow == 4) console.log('Yellow win')
+        continue
+      }
+      yellow = 0
+    }
+  }
+}
+
+function verticalCheckForWin(board:any){
+  let yellow = 0
+  let red = 0
+  for(let i = 0; i < 7; i++){
+    for(let k = 0; k < 6; k++){
+      if(board[k][i] === 'red'){
+        red++
+        if(red == 4) console.log('Red win')
+        continue
+      }
+      red = 0
+      if(board[k][i] === 'yellow'){
+        yellow++
+        if(yellow == 4) console.log('Yellow win')
+        continue
+      }
+      yellow = 0
+    }
+  }
 }
 
 export default App
